@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CargoWise Manifest Tool</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+            overflow: hidden;
+            background-color: #0f172a;
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        .page-wrapper {
+            position: relative;
+            z-index: 10;
+            max-width: 480px;
+            margin: 90px auto;
+            background-color: #ffffff;
+            padding: 36px;
+            border-radius: 8px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        h1 {
+            font-size: 22px;
+            margin-bottom: 6px;
+            color: #111827;
+        }
+
+        .description {
+            font-size: 13px;
+            color: #6b7280;
+            margin-bottom: 26px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 6px;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 11px 12px;
+            font-size: 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            background-color: #ffffff;
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        .error-message {
+            display: none;
+            margin-bottom: 16px;
+            padding: 10px 12px;
+            font-size: 13px;
+            color: #991b1b;
+            background-color: #fee2e2;
+            border-radius: 4px;
+        }
+
+        .download-button {
+            width: 100%;
+            padding: 13px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #ffffff;
+            background-color: #1f4fd8;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .download-button:hover {
+            background-color: #1e40af;
+        }
+
+        .note {
+            margin-top: 18px;
+            font-size: 11px;
+            color: #9ca3af;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-wrapper">
+        <h1>CargoWise Manifest Tool</h1>
+        <div class="description">
+            Generate and download CSV output using Job Number and Company.
+        </div>
+
+        <div id="errorMessage" class="error-message">
+            Please enter a Job Number and select a Company.
+        </div>
+
+        <form method="post" action="/download" onsubmit="return validateForm()">
+
+            <div class="form-group">
+                <label for="jobNumber">Job Number</label>
+                <input
+    id="jobNumber"
+    name="job_number"
+    type="text"
+    placeholder="Enter Job Number"
+>
+            </div>
+
+            <div class="form-group">
+                <label for="company">Company</label>
+                <select id="company" name="company">
+                    <option value="">Select Company</option>
+                    <option value="SPH">SPH – Simba Logistics, Inc.</option>
+                    <option value="BPH">BPH – Ben Line Agencies (Philippines) Inc.</option>
+                    <option value="BIN">BIN – Ben Line Agencies (India) Pvt. Ltd.</option>
+                </select>
+            </div>
+
+           <button type="submit" class="download-button">
+                Download CSV
+            </button>
+        </form>
+
+        <div class="note">
+            Powered by CargoWise eAdaptor Integration
+        </div>
+    </div>
+
+    <!-- THREE.JS -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
+
+    <script>
+        /* ===== Validation ===== */
+        function validateForm() {
+            const job = document.getElementById("jobNumber").value.trim();
+            const company = document.getElementById("company").value;
+            const error = document.getElementById("errorMessage");
+
+            error.style.display = (job === "" || company === "") ? "block" : "none";
+        }
+
+        document.querySelectorAll("input, select").forEach(el => {
+            el.addEventListener("change", () => {
+                document.getElementById("errorMessage").style.display = "none";
+            });
+        });
+
+        /* ===== 3D Network Background ===== */
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
+        camera.position.z = 150;
+
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        const nodes = [];
+        const nodeCount = 80;
+        const maxDistance = 40;
+
+        const nodeGeometry = new THREE.SphereGeometry(0.9, 8, 8);
+        const nodeMaterial = new THREE.MeshBasicMaterial({ color: 0x93c5fd });
+
+        for (let i = 0; i < nodeCount; i++) {
+            const node = new THREE.Mesh(nodeGeometry, nodeMaterial);
+            node.position.set(
+                (Math.random() - 0.5) * 200,
+                (Math.random() - 0.5) * 200,
+                (Math.random() - 0.5) * 200
+            );
+            node.userData.velocity = new THREE.Vector3(
+                (Math.random() - 0.5) * 0.2,
+                (Math.random() - 0.5) * 0.2,
+                (Math.random() - 0.5) * 0.2
+            );
+            nodes.push(node);
+            scene.add(node);
+        }
+
+        const lineMaterial = new THREE.LineBasicMaterial({
+            color: 0x60a5fa,
+            transparent: true,
+            opacity: 0.4
+        });
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            nodes.forEach(node => {
+                node.position.add(node.userData.velocity);
+                ["x", "y", "z"].forEach(axis => {
+                    if (node.position[axis] > 100 || node.position[axis] < -100) {
+                        node.userData.velocity[axis] *= -1;
+                    }
+                });
+            });
+
+            scene.children = scene.children.filter(obj => obj.type !== "Line");
+
+            for (let i = 0; i < nodes.length; i++) {
+                for (let j = i + 1; j < nodes.length; j++) {
+                    const distance = nodes[i].position.distanceTo(nodes[j].position);
+                    if (distance < maxDistance) {
+                        const geometry = new THREE.BufferGeometry().setFromPoints([
+                            nodes[i].position,
+                            nodes[j].position
+                        ]);
+                        const line = new THREE.Line(geometry, lineMaterial);
+                        scene.add(line);
+                    }
+                }
+            }
+
+            camera.position.x = Math.sin(Date.now() * 0.0002) * 10;
+            camera.position.y = Math.cos(Date.now() * 0.0002) * 10;
+            camera.lookAt(scene.position);
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        window.addEventListener("resize", () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>
