@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard – FreightPortal</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy: #0b1e3d;
+  --accent: #2f80ed;
+  --light: #f0f4fa;
+  --white: #ffffff;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--light);
+  min-height: 100vh;
+}
+
+/* NAVBAR */
+nav {
+  background: var(--navy);
+  color: white;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* CARD */
+main {
+  display: flex;
+  justify-content: center;
+  margin-top: 60px;
+}
+
+.card {
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 5px 25px rgba(0,0,0,.15);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: #0b1e3d;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <div>FreightPortal Dashboard</div>
+  <a href="/logout" style="color:white;">Logout</a>
+</nav>
+
+<main>
+  <div class="card">
+    <h2>Generate CSV Report</h2>
+    <br>
+
+    <form method="POST" action="/download">
+      <div class="form-group">
+        <label>Job Number</label>
+        <input type="text" name="job_number" required>
+      </div>
+
+      <div class="form-group">
+        <label>Company</label>
+        <input type="text" name="company" required>
+      </div>
+
+      <button type="submit">Download CSV</button>
+    </form>
+  </div>
+</main>
+
+<!-- THREE JS BACKGROUND -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
+
+<script>
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
+camera.position.z = 150;
+
+const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+renderer.domElement.style.position = "fixed";
+renderer.domElement.style.top = "0";
+renderer.domElement.style.left = "0";
+renderer.domElement.style.zIndex = "-1";
+
+const nodes = [];
+const nodeCount = 80;
+const maxDistance = 40;
+
+const nodeGeometry = new THREE.SphereGeometry(0.9, 8, 8);
+const nodeMaterial = new THREE.MeshBasicMaterial({ color: 0x93c5fd });
+
+for (let i = 0; i < nodeCount; i++) {
+    const node = new THREE.Mesh(nodeGeometry, nodeMaterial);
+    node.position.set(
+        (Math.random() - 0.5) * 200,
+        (Math.random() - 0.5) * 200,
+        (Math.random() - 0.5) * 200
+    );
+    node.userData.velocity = new THREE.Vector3(
+        (Math.random() - 0.5) * 0.2,
+        (Math.random() - 0.5) * 0.2,
+        (Math.random() - 0.5) * 0.2
+    );
+    nodes.push(node);
+    scene.add(node);
+}
+
+const lineMaterial = new THREE.LineBasicMaterial({
+    color: 0x60a5fa,
+    transparent: true,
+    opacity: 0.4
+});
+
+function animate() {
+    requestAnimationFrame(animate);
+
+    nodes.forEach(node => {
+        node.position.add(node.userData.velocity);
+        ["x","y","z"].forEach(axis => {
+            if (node.position[axis] > 100 || node.position[axis] < -100) {
+                node.userData.velocity[axis] *= -1;
+            }
+        });
+    });
+
+    scene.children = scene.children.filter(obj => obj.type !== "Line");
+
+    for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+            const distance = nodes[i].position.distanceTo(nodes[j].position);
+            if (distance < maxDistance) {
+                const geometry = new THREE.BufferGeometry().setFromPoints([
+                    nodes[i].position,
+                    nodes[j].position
+                ]);
+                const line = new THREE.Line(geometry, lineMaterial);
+                scene.add(line);
+            }
+        }
+    }
+
+    camera.position.x = Math.sin(Date.now() * 0.0002) * 10;
+    camera.position.y = Math.cos(Date.now() * 0.0002) * 10;
+    camera.lookAt(scene.position);
+
+    renderer.render(scene, camera);
+}
+
+animate();
+
+window.addEventListener("resize", () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
+</script>
+
+</body>
+</html>
