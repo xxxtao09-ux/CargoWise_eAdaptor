@@ -1,14 +1,14 @@
-from fastapi import FastAPI, Request, Form, Depends, HTTPException, status
+from fastapi import FastAPI, Request, Form, Depends, HTTPException
 from fastapi.responses import HTMLResponse, RedirectResponse, StreamingResponse
 from fastapi.templating import Jinja2Templates
-from fastapi.middleware.sessions import SessionMiddleware
+from starlette.middleware.sessions import SessionMiddleware
 from io import StringIO
 import secrets
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 
-# Session middleware (important for login sessions)
+# Session middleware
 app.add_middleware(SessionMiddleware, secret_key="super-secret-session-key")
 
 USERNAME = "admin"
@@ -29,13 +29,11 @@ def get_current_user(request: Request):
 # ROUTES
 # -----------------------------
 
-# Login Page
 @app.get("/", response_class=HTMLResponse)
 def login_page(request: Request):
     return templates.TemplateResponse("login.html", {"request": request})
 
 
-# Handle Login Form
 @app.post("/login")
 def login(request: Request, username: str = Form(...), password: str = Form(...)):
     correct_username = secrets.compare_digest(username, USERNAME)
@@ -51,7 +49,6 @@ def login(request: Request, username: str = Form(...), password: str = Form(...)
     return RedirectResponse("/dashboard", status_code=302)
 
 
-# Dashboard Page (Protected)
 @app.get("/dashboard", response_class=HTMLResponse)
 def dashboard(request: Request, user: str = Depends(get_current_user)):
     return templates.TemplateResponse(
@@ -60,7 +57,6 @@ def dashboard(request: Request, user: str = Depends(get_current_user)):
     )
 
 
-# Download CSV (Protected)
 @app.post("/download")
 def download_csv(
     request: Request,
@@ -76,13 +72,10 @@ def download_csv(
     return StreamingResponse(
         csv_data,
         media_type="text/csv",
-        headers={
-            "Content-Disposition": "attachment; filename=report.csv"
-        }
+        headers={"Content-Disposition": "attachment; filename=report.csv"}
     )
 
 
-# Logout
 @app.get("/logout")
 def logout(request: Request):
     request.session.clear()
