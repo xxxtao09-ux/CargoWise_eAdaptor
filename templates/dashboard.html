@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard – FreightPortal</title>
+<title>EDI Portal Dashboard</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
 
@@ -52,7 +52,7 @@ main {
   margin-bottom: 20px;
 }
 
-input {
+input, select {
   width: 100%;
   padding: 10px;
   border-radius: 6px;
@@ -74,7 +74,7 @@ button {
 <body>
 
 <nav>
-  <div>FreightPortal Dashboard</div>
+  <div>EDI Portal Dashboard</div>
   <a href="/logout" style="color:white;">Logout</a>
 </nav>
 
@@ -91,7 +91,13 @@ button {
 
       <div class="form-group">
         <label>Company</label>
-        <input type="text" name="company" required>
+        <select name="company" required>
+          <option value="">Select Company</option>
+          <option value="SPH">SPH - Simba Logistics, Inc.</option>
+          <option value="BIN">BIN - Ben Line Agencies (India) Pvt. Ltd.</option>
+          <option value="BPH">BPH - Ben Line Agencies Philippines</option>
+          <option value="BSG">BSG - Ben Line Agencies Singapore</option>
+        </select>
       </div>
 
       <button type="submit">Download CSV</button>
@@ -181,12 +187,6 @@ function animate() {
 }
 
 animate();
-
-window.addEventListener("resize", () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-});
 </script>
 
 </body>
