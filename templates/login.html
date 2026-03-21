@@ -32,33 +32,33 @@ body {
   background: linear-gradient(145deg, #0b1e3d 0%, #0d2a56 60%, #0f3470 100%);
   color: white;
   display: flex;
-  flex-direction: column;
-  padding: 30px 40px;
+  justify-content: center;
+  align-items: center;
 }
 
-/* IMAGE AREA */
+.brand-container {
+  width: 80%;
+  max-width: 520px;
+}
+
+/* IMAGE */
 .brand-image {
   width: 100%;
-  max-width: 520px;
-  border-radius: 10px;
-  margin-bottom: 30px;
+  border-radius: 12px;
+  margin-bottom: 25px;
 }
 
-/* TEXT AREA */
-.brand-text {
-  margin-top: auto;
-}
-
+/* TEXT */
 .brand-title {
   font-family: 'Syne', sans-serif;
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   margin-bottom: 10px;
 }
 
 .brand-headline {
   font-family: 'Syne', sans-serif;
   font-size: 2rem;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
 .brand-headline span {
@@ -67,7 +67,7 @@ body {
 
 .brand-desc {
   color: var(--silver);
-  margin-bottom: 20px;
+  margin-bottom: 18px;
   line-height: 1.6;
 }
 
@@ -87,7 +87,7 @@ body {
 
 .login-box {
   width: 100%;
-  max-width: 400px;
+  max-width: 380px;
 }
 
 .login-box h2 {
@@ -139,12 +139,10 @@ input {
 
 <!-- LEFT SIDE -->
 <div class="brand-panel">
+  <div class="brand-container">
 
-  <!-- IMAGE TOP LEFT -->
-  <img src="/static/images/logistics.jpg" class="brand-image">
+    <img src="/static/images/logistics.jpg" class="brand-image">
 
-  <!-- TEXT LOWER LEFT -->
-  <div class="brand-text">
     <div class="brand-title">EDI Portal</div>
 
     <div class="brand-headline">
@@ -162,8 +160,8 @@ input {
       <li>• Role-based access with secure authentication</li>
       <li>• Centralised document and data management</li>
     </ul>
-  </div>
 
+  </div>
 </div>
 
 <!-- RIGHT SIDE LOGIN -->
