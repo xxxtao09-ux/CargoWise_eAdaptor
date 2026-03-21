@@ -32,23 +32,30 @@ body {
   background: linear-gradient(145deg, #0b1e3d 0%, #0d2a56 60%, #0f3470 100%);
   color: white;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  padding-top: 80px;
 }
 
 .brand-container {
   width: 80%;
-  max-width: 520px;
+  max-width: 750px;
 }
 
 /* IMAGE */
 .brand-image {
   width: 100%;
+  max-width: 750px;
   border-radius: 12px;
-  margin-bottom: 25px;
+  margin-bottom: 90px;
 }
 
 /* TEXT */
+.brand-text {
+  width: 100%;
+  text-align: left;
+}
+
 .brand-title {
   font-family: 'Syne', sans-serif;
   font-size: 1.3rem;
@@ -57,8 +64,9 @@ body {
 
 .brand-headline {
   font-family: 'Syne', sans-serif;
-  font-size: 2rem;
+  font-size: 2.2rem;
   margin-bottom: 12px;
+  line-height: 1.2;
 }
 
 .brand-headline span {
@@ -69,6 +77,11 @@ body {
   color: var(--silver);
   margin-bottom: 18px;
   line-height: 1.6;
+}
+
+.feature-list {
+  margin-top: 10px;
+  padding-left: 15px;
 }
 
 .feature-list li {
@@ -143,23 +156,25 @@ input {
 
     <img src="/static/images/logistics.jpg" class="brand-image">
 
-    <div class="brand-title">EDI Portal</div>
+    <div class="brand-text">
+      <div class="brand-title">EDI Portal</div>
 
-    <div class="brand-headline">
-      Your logistics,<br>
-      <span>fully in control.</span>
+      <div class="brand-headline">
+        Your logistics,<br>
+        <span>fully in control.</span>
+      </div>
+
+      <div class="brand-desc">
+        Access your shipment records, generate reports, and manage your freight operations — all from one secure portal.
+      </div>
+
+      <ul class="feature-list">
+        <li>• Real-time job tracking and status updates</li>
+        <li>• One-click CSV export for any job or company</li>
+        <li>• Role-based access with secure authentication</li>
+        <li>• Centralised document and data management</li>
+      </ul>
     </div>
-
-    <div class="brand-desc">
-      Access your shipment records, generate reports, and manage your freight operations — all from one secure portal.
-    </div>
-
-    <ul class="feature-list">
-      <li>• Real-time job tracking and status updates</li>
-      <li>• One-click CSV export for any job or company</li>
-      <li>• Role-based access with secure authentication</li>
-      <li>• Centralised document and data management</li>
-    </ul>
 
   </div>
 </div>
