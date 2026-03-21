@@ -1,112 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Portal Login</title>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>EDI Portal Login</title>
 
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
 
-    :root {
-      --navy: #0b1e3d;
-      --accent: #2f80ed;
-      --light: #f0f4fa;
-      --white: #ffffff;
-      --error: #e05252;
-      --silver: #c8d6ea;
-    }
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    html, body { height: 100%; }
+:root {
+  --navy: #0b1e3d;
+  --accent: #2f80ed;
+  --light: #f0f4fa;
+  --white: #ffffff;
+  --silver: #c8d6ea;
+}
 
-    body {
-      font-family: 'DM Sans', sans-serif;
-      display: flex;
-      min-height: 100vh;
-      background: var(--navy);
-    }
+html, body { height: 100%; }
 
-    .brand-panel {
-      flex: 1.1;
-      background: linear-gradient(145deg, #0b1e3d 0%, #0d2a56 60%, #0f3470 100%);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 5rem;
-      color: white;
-    }
+body {
+  font-family: 'DM Sans', sans-serif;
+  display: flex;
+  min-height: 100vh;
+}
 
-    .brand-panel h1 {
-      font-family: 'Syne', sans-serif;
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-    }
+/* LEFT PANEL */
+.brand-panel {
+  flex: 1.1;
+  background: linear-gradient(145deg, #0b1e3d 0%, #0d2a56 60%, #0f3470 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5rem;
+  color: white;
+}
 
-    .login-panel {
-      flex: .9;
-      background: var(--light);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+.brand-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.3rem;
+  margin-bottom: 40px;
+}
 
-    .login-box {
-      width: 100%;
-      max-width: 400px;
-    }
+.brand-headline {
+  font-family: 'Syne', sans-serif;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
 
-    .login-box h2 {
-      font-family: 'Syne', sans-serif;
-      margin-bottom: 10px;
-      color: #0b1e3d;
-    }
+.brand-headline span {
+  color: #4fc3f7;
+}
 
-    .form-group {
-      margin-bottom: 1.2rem;
-    }
+.brand-desc {
+  color: var(--silver);
+  margin-bottom: 25px;
+  line-height: 1.6;
+}
 
-    label {
-      font-size: .8rem;
-      text-transform: uppercase;
-      display: block;
-      margin-bottom: 4px;
-    }
+.feature-list {
+  margin-top: 15px;
+}
 
-    input {
-      width: 100%;
-      padding: .8rem;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-    }
+.feature-list li {
+  margin-bottom: 10px;
+  color: var(--silver);
+}
 
-    .btn-login {
-      width: 100%;
-      padding: .9rem;
-      background: #2f80ed;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-family: 'Syne';
-      cursor: pointer;
-    }
+/* RIGHT PANEL */
+.login-panel {
+  flex: .9;
+  background: var(--light);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-    .btn-login:hover {
-      background: #1a6fd8;
-    }
+.login-box {
+  width: 100%;
+  max-width: 400px;
+}
 
-  </style>
+.login-box h2 {
+  font-family: 'Syne', sans-serif;
+  margin-bottom: 10px;
+  color: #0b1e3d;
+}
+
+.form-group {
+  margin-bottom: 1.2rem;
+}
+
+label {
+  font-size: .8rem;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 4px;
+}
+
+input {
+  width: 100%;
+  padding: .8rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.btn-login {
+  width: 100%;
+  padding: .9rem;
+  background: #2f80ed;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-family: 'Syne';
+  cursor: pointer;
+}
+
+.btn-login:hover {
+  background: #1a6fd8;
+}
+
+.error {
+  color: red;
+  margin-bottom: 10px;
+}
+</style>
 </head>
 <body>
 
+<!-- LEFT SIDE -->
 <div class="brand-panel">
-  <h1>FreightPortal</h1>
-  <p>Manage shipments, generate reports, and access logistics tools in one secure portal.</p>
+  <div class="brand-title">EDI Portal</div>
+
+  <div class="brand-headline">
+    Your logistics,<br>
+    <span>fully in control.</span>
+  </div>
+
+  <div class="brand-desc">
+    Access your shipment records, generate reports, and manage your freight operations — all from one secure portal.
+  </div>
+
+  <ul class="feature-list">
+    <li>• Real-time job tracking and status updates</li>
+    <li>• One-click CSV export for any job or company</li>
+    <li>• Role-based access with secure authentication</li>
+    <li>• Centralised document and data management</li>
+  </ul>
 </div>
 
+<!-- RIGHT SIDE -->
 <div class="login-panel">
   <div class="login-box">
     <h2>Sign in</h2>
+    <p>Enter your credentials to access the portal.</p>
+    <br>
+
+    {% if error %}
+    <div class="error">{{ error }}</div>
+    {% endif %}
+
     <form method="POST" action="/login">
       <div class="form-group">
         <label>Username</label>
@@ -118,7 +172,7 @@
         <input type="password" name="password" required>
       </div>
 
-      <button class="btn-login">Sign In</button>
+      <button class="btn-login">Sign In →</button>
     </form>
   </div>
 </div>
