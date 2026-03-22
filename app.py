@@ -76,9 +76,8 @@ async def receive_xml(request: Request):
     body = await request.body()
     xml_data = body.decode("utf-8")
 
-    print("===== XML RECEIVED =====")
-    print(xml_data)
-    print("===== END XML =====")
+    print(f"Saved XML file: {filename}")
+    print(f"XML length: {len(xml_data)}")
 
     return PlainTextResponse("OK")
 
