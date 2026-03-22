@@ -84,6 +84,9 @@ async def receive_xml(request: Request):
     with open(filename, "w", encoding="utf-8") as f:
         f.write(xml_data)
 
+    print(f"Saved XML file: {filename}")
+    print(f"XML length: {len(xml_data)}")
+
     return PlainTextResponse("OK")
 
 @app.post("/download")
