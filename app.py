@@ -68,6 +68,20 @@ def dashboard(request: Request, user: str = Depends(get_current_user)):
         {"request": request, "user": user}
     )
 
+@app.post("/cw/outbound")
+async def receive_xml(request: Request):
+    body = await request.body()
+    xml_data = body.decode("utf-8")
+
+    # Create folder if not exists
+    os.makedirs("xml_logs", exist_ok=True)
+
+    filename = f"xml_logs/cw_{datetime.now().strftime('%Y%m%d_%H%M%S')}.xml"
+
+    with open(filename, "w", encoding="utf-8") as f:
+        f.write(xml_data)
+
+    return PlainTextResponse("OK")
 
 @app.post("/download")
 def download_csv(
