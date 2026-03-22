@@ -16,9 +16,12 @@ templates = Jinja2Templates(directory="templates")
 # Session middleware
 app.add_middleware(SessionMiddleware, secret_key="super-secret-session-key")
 
-USERNAME = "admin"
-PASSWORD = "supersecret"
-
+USERS = {
+    "admin": "supersecret",
+    "briggs": "password123",
+    "merjel": "ediportal",
+    "ops": "logistics"
+}
 
 # -----------------------------
 # AUTH FUNCTIONS
@@ -40,10 +43,15 @@ def login_page(request: Request):
 
 @app.post("/login")
 def login(request: Request, username: str = Form(...), password: str = Form(...)):
-    correct_username = secrets.compare_digest(username, USERNAME)
-    correct_password = secrets.compare_digest(password, PASSWORD)
+    if username not in USERS:
+        return templates.TemplateResponse(
+            "login.html",
+            {"request": request, "error": "Invalid username or password"}
+        )
 
-    if not (correct_username and correct_password):
+    correct_password = secrets.compare_digest(password, USERS[username])
+
+    if not correct_password:
         return templates.TemplateResponse(
             "login.html",
             {"request": request, "error": "Invalid username or password"}
