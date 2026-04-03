@@ -28,7 +28,7 @@ async def receive_xml(request: Request):
     root = ET.fromstring(xml_data)
     ns = {"cw": "http://www.cargowise.com/Schemas/Universal/2011/11"}
 
-    job_number = root.find(".//cw:Shipment//cw:DataContext/cw:DataSourceCollection/cw:DataSource[cw:Type='ForwardingShipmenty']/cw:Key", ns)
+    job_number = root.find(".//cw:Shipment//cw:DataContext/cw:DataSourceCollection/cw:DataSource[cw:Type='ForwardingShipment']/cw:Key", ns)
     company_code = root.find(".//cw:Shipment//cw:DataContext/cw:DataSourceCollection/cw:Company/cw:Code", ns)
     email = root.find(".//cw:EventUser/cw:Code", ns)
 
