@@ -8,7 +8,7 @@ class CargoWise_eAdaptor_PH_GEN():
         
     def main(self):
         PH_eAdaptor = self.eAdaptor
-        filename = f"{self.eAdaptor.comp_code}_{self.eAdaptor.key}.BOL"
+        filename = f"edi_output/{self.eAdaptor.comp_code}_{self.eAdaptor.key}.BOL"
                    
         with open(f"{filename}", "a", newline='') as file:
             writer = csv.DictWriter(file, 
