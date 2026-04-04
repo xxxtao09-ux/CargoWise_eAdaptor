@@ -56,6 +56,9 @@ async def receive_xml(request: Request):
         comp_code=company_code
     )
 
+    user_email = eAdaptor.get_user_email()
+    print("Recipient Email:", user_email)
+
     # Route to correct transformer (same logic as fetch_eAdaptor_data)
     if company_code.endswith("PH"):
         print("Running PH GEN")
