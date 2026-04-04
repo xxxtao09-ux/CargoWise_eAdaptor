@@ -41,3 +41,11 @@ class CargoWise_eAdaptor_PH_CTN():
                 "Seal 3": ", ".join([s3.text for s3 in PH_eAdaptor.root.findall(".//cw:Shipment/cw:ContainerCollection/cw:Container/cw:Seal3", PH_eAdaptor.ns) if s3.text]),
                 "Sealing Party": ", ".join([ct.text for ct in PH_eAdaptor.root.findall(".//cw:Shipment/cw:ContainerCollection/cw:Container/cw:SealPartyType/cw:Code", PH_eAdaptor.ns) if ct.text]),
             })
+
+            print("=== PH CTN SCRIPT START ===")
+            print("Job:", self.eAdaptor.key)
+            print("Company:", self.eAdaptor.comp_code)
+            print("Root:", self.eAdaptor.root)
+            print("Filename:", filename)
+            print("Writing file...")
+            print("File written successfully")
