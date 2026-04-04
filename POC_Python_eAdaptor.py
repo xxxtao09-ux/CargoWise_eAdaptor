@@ -16,8 +16,8 @@ class CargoWise_eAdaptor():
         self.auth = base64.b64encode(f"{self.username}:{self.password}".encode()).decode() 
         self.endpoint = os.getenv("CARGOWISE_EADAPTOR_ENDPOINT") 
         self.namespace = os.getenv("CARGOWISE_NAMESPACE")
-        self.key = input("Enter Job Number: ") 
-        self.comp_code = input("Enter Company Code: ") 
+        self.key = self.get_job_number()
+        self.comp_code = self.get_company_code()
         self.root = self.get_data()
 
     def get_data(self):
@@ -53,6 +53,33 @@ class CargoWise_eAdaptor():
     def get_text(self, xpath):
         element = self.root.find(xpath, self.ns)
         return element.text if element is not None else "Not Found"
+
+        def get_job_number(self):
+        return self.get_text(
+            ".//cw:Shipment//cw:DataContext/cw:DataSourceCollection"
+            "/cw:DataSource[cw:Type='ForwardingShipment']/cw:Key"
+        )
+
+    def get_company_code(self):
+        return self.get_text(
+            ".//cw:Shipment//cw:DataContext/cw:Company/cw:Code"
+        )
+
+    def get_user_email(self):
+        user_code = self.get_text(
+            ".//cw:Shipment//cw:DataContext/cw:DataSourceCollection"
+            "/cw:EventUser/cw:Code"
+        )
+        df = pd.read_excel("User_Account_Details.xlsx")
+        result = df[df["Code"] == user_code]
+        return result.iloc[0]["Email Address"] if not result.empty else None
+
+    def extract_header_details(self):
+        return {
+            "job_number":   self.get_job_number(),
+            "company_code": self.get_company_code(),
+            "user_email":   self.get_user_email(),
+        }
     
 if __name__ == "__main__":
     eAdaptor = CargoWise_eAdaptor()
