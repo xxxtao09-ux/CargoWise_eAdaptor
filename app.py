@@ -40,15 +40,15 @@ async def receive_xml(request: Request):
 
     job_number = root.find(".//cw:Shipment//cw:DataContext/cw:DataSourceCollection/cw:DataSource[cw:Type='ForwardingShipment']/cw:Key", ns)
     company_code =  root.find(".//cw:Shipment//cw:DataContext/cw:Company/cw:Code", ns)
-    email = root.find(".//cw:EventUser/cw:Code", ns)
+    
 
     job_number = job_number.text if job_number is not None else ""
     company_code = company_code.text if company_code is not None else ""
-    email = email.text if email is not None else ""
+    
 
     print("Job:", job_number)
     print("Company:", company_code)
-    print("Email:", email)
+    
 
     # Bridge: pass parsed values directly into your eAdaptor class
     eAdaptor = CargoWise_eAdaptor(
