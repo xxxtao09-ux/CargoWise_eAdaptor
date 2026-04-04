@@ -1,10 +1,7 @@
 fastapi
 uvicorn
-jinja2
-requests
-python-dotenv
-python-multipart
-itsdangerous
+pandas
 openpyxl
-panda
-csv
+python-dotenv
+jinja2
+python-multipart
