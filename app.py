@@ -24,6 +24,7 @@ async def receive_xml(request: Request):
 
     # Save XML
     os.makedirs("xml_logs", exist_ok=True)
+    os.makedirs("edi_output", exist_ok=True)
     xml_filename = f"xml_logs/cw_{datetime.now().strftime('%Y%m%d_%H%M%S')}.xml"
 
     with open(xml_filename, "w", encoding="utf-8") as f:
