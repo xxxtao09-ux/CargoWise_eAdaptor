@@ -88,15 +88,16 @@ class CargoWise_eAdaptor():
         msg["Subject"] = "CargoWise EDI Output"
         msg["From"] = os.getenv("EMAIL_USER")
         msg["To"] = recipient
-        msg.set_content("Please find attached EDI output file.")
+        msg.set_content("Please find attached EDI output files.")
     
-        with open(file_path, "rb") as f:
-            msg.add_attachment(
-                f.read(),
-                maintype="application",
-                subtype="octet-stream",
-                filename=os.path.basename(file_path)
-            )
+        for file_path in file_paths:
+            with open(file_path, "rb") as f:
+                msg.add_attachment(
+                    f.read(),
+                    maintype="application",
+                    subtype="octet-stream",
+                    filename=os.path.basename(file_path)
+                )
     
         with smtplib.SMTP("smtp.gmail.com", 587) as smtp:
             smtp.starttls()
