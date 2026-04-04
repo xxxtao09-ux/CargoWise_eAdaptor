@@ -71,7 +71,7 @@ class CargoWise_eAdaptor():
 
     def get_user_email(self):
         df = pd.read_excel("User_Account_Details.xlsx")
-        result = df[df["Code"] == user_code]
+        result = df[df["Code"] == self.user_code]
 
         if not result.empty:
             return result.iloc[0]["Email Address"]
