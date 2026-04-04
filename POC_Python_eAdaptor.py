@@ -70,8 +70,7 @@ class CargoWise_eAdaptor():
 
     def get_user_email(self):
         user_code = self.get_text(
-            ".//cw:Shipment//cw:DataContext/cw:DataSourceCollection"
-            "/cw:EventUser/cw:Code"
+            ".//cw:Shipment//cw:DataContext/cw:EventUser/cw:Code"
         )
         df = pd.read_excel("User_Account_Details.xlsx")
         result = df[df["Code"] == user_code]
