@@ -40,14 +40,17 @@ async def receive_xml(request: Request):
 
     job_number = root.find(".//cw:Shipment//cw:DataContext/cw:DataSourceCollection/cw:DataSource[cw:Type='ForwardingShipment']/cw:Key", ns)
     company_code =  root.find(".//cw:Shipment//cw:DataContext/cw:Company/cw:Code", ns)
+    user_code = root.find(".//cw:Shipment//cw:DataContext/cw:DataSourceCollection/cw:EventUser/cw:Code", ns)
     
 
     job_number = job_number.text if job_number is not None else ""
     company_code = company_code.text if company_code is not None else ""
+    user_code = user_code.text if user_code is Not None else ""
     
 
     print("Job:", job_number)
     print("Company:", company_code)
+    print("User:", user_code)
     
 
     # Bridge: pass parsed values directly into your eAdaptor class
