@@ -40,7 +40,7 @@ async def receive_xml(request: Request):
 
     job_number = root.find(".//cw:Shipment//cw:DataContext/cw:DataSourceCollection/cw:DataSource[cw:Type='ForwardingShipment']/cw:Key", ns)
     company_code =  root.find(".//cw:Shipment//cw:DataContext/cw:Company/cw:Code", ns)
-    user_code = root.find(".//cw:Shipment//cw:DataContext/cw:DataSourceCollection/cw:EventUser/cw:Code", ns)
+    user_code = root.find(".//cw:Shipment//cw:DataContext/cw:EventUser/cw:Code", ns)
     
 
     job_number = job_number.text if job_number is not None else ""
