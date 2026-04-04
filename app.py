@@ -1,3 +1,10 @@
+from POC_Python_eAdaptor import CargoWise_eAdaptor
+from POC_Python_eAdaptor_PH_GEN import CargoWise_eAdaptor_PH_GEN
+from POC_Python_eAdaptor_SG import CargoWise_eAdaptor_SG_BOL
+from POC_Python_eAdaptor_PH_CTN import CargoWise_eAdaptor_PH_CTN
+from POC_Python_eAdaptor_IN import CargoWise_eAdaptor_IN_CargoItineraryData
+from POC_Python_eAdaptor_IN import CargoWise_eAdaptor_IN_CargoItemsData
+from POC_Python_eAdaptor_IN import CargoWise_eAdaptor_IN_ContainerData
 from fastapi import FastAPI, Request
 import xml.etree.ElementTree as ET
 from fastapi.responses import PlainTextResponse
@@ -40,5 +47,25 @@ async def receive_xml(request: Request):
     print("Company:", company_code)
     print("Email:", email)
 
+    # Bridge: pass parsed values directly into your eAdaptor class
+    eAdaptor = CargoWise_eAdaptor(
+        key=job_number,
+        comp_code=company_code
+    )
 
+    # Route to correct transformer (same logic as fetch_eAdaptor_data)
+    if company_code.endswith("PH"):
+        CargoWise_eAdaptor_PH_GEN(eAdaptor).main()
+        CargoWise_eAdaptor_PH_CTN(eAdaptor).main()
+    elif company_code.endswith("SG"):
+        CargoWise_eAdaptor_SG_BOL(eAdaptor).main()
+    elif company_code.endswith("IN"):
+        CargoWise_eAdaptor_IN_CargoItineraryData(eAdaptor).main()
+        CargoWise_eAdaptor_IN_CargoItemsData(eAdaptor).main()
+        CargoWise_eAdaptor_IN_ContainerData(eAdaptor).main()
+    else:
+        print(f"Invalid Company Code: {company_code}")
+        return PlainTextResponse("Invalid company code", status_code=400)
+
+    return PlainTextResponse("OK")
     return PlainTextResponse("OK")
