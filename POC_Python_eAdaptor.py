@@ -21,6 +21,7 @@ class CargoWise_eAdaptor():
         self.namespace = os.getenv("CARGOWISE_NAMESPACE")
         self.key = key
         self.comp_code = comp_code
+        self.user_code = user_code
         self.root = self.get_data()
 
     def get_data(self):
@@ -69,12 +70,13 @@ class CargoWise_eAdaptor():
         )
 
     def get_user_email(self):
-        user_code = self.get_text(
-            ".//cw:Shipment//cw:DataContext/cw:EventUser/cw:Code"
-        )
         df = pd.read_excel("User_Account_Details.xlsx")
         result = df[df["Code"] == user_code]
-        return result.iloc[0]["Email Address"] if not result.empty else None
+
+        if not result.empty:
+            return result.iloc[0]["Email Address"]
+        else:
+            return None
 
     def extract_header_details(self):
         return {
