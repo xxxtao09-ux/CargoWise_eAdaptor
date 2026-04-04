@@ -10,7 +10,7 @@ class CargoWise_eAdaptor_PH_CTN():
         PH_eAdaptor = self.eAdaptor
         filename = f"edi_output/{self.eAdaptor.comp_code}_{self.eAdaptor.key}.CTN"
                    
-        with open(f"{filename}", "a", newline='') as file:
+        with open(f"{filename}", "w", newline='') as file:
             writer = csv.DictWriter(file, 
                                     quotechar='"',
                                     quoting=csv.QUOTE_ALL,
