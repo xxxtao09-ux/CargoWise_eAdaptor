@@ -5,6 +5,8 @@ import base64
 import csv 
 from logging import root
 import xml.etree.ElementTree as ET
+import smptplib
+from email.message import EmailMessage
 
 load_dotenv()
 
@@ -80,6 +82,28 @@ class CargoWise_eAdaptor():
             "company_code": self.get_company_code(),
             "user_email":   self.get_user_email(),
         }
+
+    def send_email(recipient, file_path):
+        msg = EmailMessage()
+        msg["Subject"] = "CargoWise EDI Output"
+        msg["From"] = os.getenv("EMAIL_USER")
+        msg["To"] = recipient
+        msg.set_content("Please find attached EDI output file.")
+    
+        with open(file_path, "rb") as f:
+            msg.add_attachment(
+                f.read(),
+                maintype="application",
+                subtype="octet-stream",
+                filename=os.path.basename(file_path)
+            )
+    
+        with smtplib.SMTP("smtp.gmail.com", 587) as smtp:
+            smtp.starttls()
+            smtp.login(os.getenv("EMAIL_USER"), os.getenv("EMAIL_PASS"))
+            smtp.send_message(msg)
+    
+        print("Email sent to:", recipient)
     
 if __name__ == "__main__":
     eAdaptor = CargoWise_eAdaptor()
