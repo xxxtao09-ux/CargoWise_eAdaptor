@@ -9,7 +9,7 @@ import xml.etree.ElementTree as ET
 load_dotenv()
 
 class CargoWise_eAdaptor(): 
-    def __init__(self):
+    def __init__(self,key,comp_code):
 
         self.username = os.getenv("CARGOWISE_EADAPTOR_USERNAME")
         self.password = os.getenv("CARGOWISE_EADAPTOR_PASSWORD")
