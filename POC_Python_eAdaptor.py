@@ -5,7 +5,7 @@ import base64
 import csv 
 from logging import root
 import xml.etree.ElementTree as ET
-import smptplib
+import smtplib
 from email.message import EmailMessage
 
 load_dotenv()
