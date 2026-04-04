@@ -16,8 +16,8 @@ class CargoWise_eAdaptor():
         self.auth = base64.b64encode(f"{self.username}:{self.password}".encode()).decode() 
         self.endpoint = os.getenv("CARGOWISE_EADAPTOR_ENDPOINT") 
         self.namespace = os.getenv("CARGOWISE_NAMESPACE")
-        self.key = self.get_job_number()
-        self.comp_code = self.get_company_code()
+        self.key = key
+        self.comp_code = comp_code
         self.root = self.get_data()
 
     def get_data(self):
