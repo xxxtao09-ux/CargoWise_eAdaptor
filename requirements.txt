@@ -5,3 +5,6 @@ requests
 python-dotenv
 python-multipart
 itsdangerous
+openpyxl
+panda
+csv
