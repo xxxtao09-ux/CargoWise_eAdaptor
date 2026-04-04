@@ -7,6 +7,7 @@ from logging import root
 import xml.etree.ElementTree as ET
 import smtplib
 from email.message import EmailMessage
+import pandas as pd
 
 load_dotenv()
 
