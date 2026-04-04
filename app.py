@@ -45,7 +45,7 @@ async def receive_xml(request: Request):
 
     job_number = job_number.text if job_number is not None else ""
     company_code = company_code.text if company_code is not None else ""
-    user_code = user_code.text if user_code is Not None else ""
+    user_code = user_code.text if user_code is not None else ""
     
 
     print("Job:", job_number)
