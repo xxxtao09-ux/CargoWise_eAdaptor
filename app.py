@@ -28,8 +28,11 @@ async def receive_xml(request: Request):
     root = ET.fromstring(xml_data)
     ns = {"cw": "http://www.cargowise.com/Schemas/Universal/2011/11"}
 
-    job_number = root.find(".//cw:Shipment//cw:DataContext/cw:DataSourceCollection/cw:DataSource[cw:Type='ForwardingShipment']/cw:Key", ns)
-    company_code = root.find(".//cw:Shipment//cw:DataContext/cw:DataSourceCollection/cw:Company/cw:Code", ns)
+    job_number = root.findall(".//cw:Shipment//cw:DataContext/cw:DataSourceCollection/cw:DataSource[cw:Type='ForwardingShipment']/cw:Key", ns)
+    company_code =  for ds in root.findall(".//cw:DataSource", ns):
+        type_el = ds.find("cw:Type", ns)
+        if type_el is not None and type_el.text == "ForwardingShipment":
+            key = ds.find("cw:Key", ns)
     email = root.find(".//cw:EventUser/cw:Code", ns)
 
     job_number = job_number.text if job_number is not None else ""
