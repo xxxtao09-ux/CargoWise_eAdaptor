@@ -56,7 +56,8 @@ async def receive_xml(request: Request):
     # Bridge: pass parsed values directly into your eAdaptor class
     eAdaptor = CargoWise_eAdaptor(
         key=job_number,
-        comp_code=company_code
+        comp_code=company_code,
+        
     )
 
     user_email = eAdaptor.get_user_email()
