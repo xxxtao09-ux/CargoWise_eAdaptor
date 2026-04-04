@@ -57,22 +57,22 @@ async def receive_xml(request: Request):
     )
 
     # Route to correct transformer (same logic as fetch_eAdaptor_data)
-if company_code.endswith("PH"):
-    print("Running PH GEN")
-    CargoWise_eAdaptor_PH_GEN(eAdaptor).main()
-
-    print("Running PH CTN")
-    CargoWise_eAdaptor_PH_CTN(eAdaptor).main()
-
-elif company_code.endswith("SG"):
-    print("Running SG BOL")
-    CargoWise_eAdaptor_SG_BOL(eAdaptor).main()
-
-elif company_code.endswith("IN"):
-    print("Running IN Transformers")
-    CargoWise_eAdaptor_IN_CargoItineraryData(eAdaptor).main()
-    CargoWise_eAdaptor_IN_CargoItemsData(eAdaptor).main()
-    CargoWise_eAdaptor_IN_ContainerData(eAdaptor).main()
-
-return PlainTextResponse("OK")
+    if company_code.endswith("PH"):
+        print("Running PH GEN")
+        CargoWise_eAdaptor_PH_GEN(eAdaptor).main()
+    
+        print("Running PH CTN")
+        CargoWise_eAdaptor_PH_CTN(eAdaptor).main()
+    
+    elif company_code.endswith("SG"):
+        print("Running SG BOL")
+        CargoWise_eAdaptor_SG_BOL(eAdaptor).main()
+    
+    elif company_code.endswith("IN"):
+        print("Running IN Transformers")
+        CargoWise_eAdaptor_IN_CargoItineraryData(eAdaptor).main()
+        CargoWise_eAdaptor_IN_CargoItemsData(eAdaptor).main()
+        CargoWise_eAdaptor_IN_ContainerData(eAdaptor).main()
+    
+    return PlainTextResponse("OK")
 
