@@ -54,7 +54,7 @@ class CargoWise_eAdaptor():
         element = self.root.find(xpath, self.ns)
         return element.text if element is not None else "Not Found"
 
-        def get_job_number(self):
+    def get_job_number(self):
         return self.get_text(
             ".//cw:Shipment//cw:DataContext/cw:DataSourceCollection"
             "/cw:DataSource[cw:Type='ForwardingShipment']/cw:Key"
