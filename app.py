@@ -57,7 +57,7 @@ async def receive_xml(request: Request):
     eAdaptor = CargoWise_eAdaptor(
         key=job_number,
         comp_code=company_code,
-        
+        user_code=user_code
     )
 
     user_email = eAdaptor.get_user_email()
