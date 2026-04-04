@@ -76,3 +76,10 @@ async def receive_xml(request: Request):
     
     return PlainTextResponse("OK")
 
+@app.get("/files")
+def list_files():
+    import os
+    if not os.path.exists("edi_output"):
+        return {"files": []}
+    return {"files": os.listdir("edi_output")}
+
