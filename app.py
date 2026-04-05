@@ -12,6 +12,8 @@ from datetime import datetime
 import os
 import pandas as pd
 from openpyxl import Workbook
+import smtplib
+from email.message import EmailMessage
 
 def send_email(recipient, file_paths):
     msg = EmailMessage()
