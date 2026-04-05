@@ -8,7 +8,7 @@ class CargoWise_eAdaptor_IN_CargoItineraryData():
         
     def main(self):
         IN_eAdaptor = self.eAdaptor
-        filename = f"{self.eAdaptor.comp_code}_{self.eAdaptor.key}_CargoItineraryData.xlsx"
+        filename = f"edi_output/{self.eAdaptor.comp_code}_{self.eAdaptor.key}_CargoItineraryData.xlsx"
         
         wb = Workbook()
         ws = wb.active
@@ -51,7 +51,7 @@ class CargoWise_eAdaptor_IN_CargoItemsData():
         
     def main(self):
         IN_eAdaptor = self.eAdaptor
-        filename = f"{self.eAdaptor.comp_code}_{self.eAdaptor.key}_CargoItemsData.xlsx"
+        filename = f"edi_output/{self.eAdaptor.comp_code}_{self.eAdaptor.key}_CargoItemsData.xlsx"
         
         wb = Workbook()
         ws = wb.active
@@ -87,7 +87,7 @@ class CargoWise_eAdaptor_IN_ContainerData():
         
     def main(self):
         IN_eAdaptor = self.eAdaptor
-        filename = f"{self.eAdaptor.comp_code}_{self.eAdaptor.key}_ContainerData.xlsx"
+        filename = f"edi_output/{self.eAdaptor.comp_code}_{self.eAdaptor.key}_ContainerData.xlsx"
         
         wb = Workbook()
         ws = wb.active
