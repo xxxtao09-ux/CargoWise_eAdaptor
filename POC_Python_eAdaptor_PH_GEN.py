@@ -147,3 +147,4 @@ class CargoWise_eAdaptor_PH_GEN():
                                         "Information 1" : "",
                                         "Information 2" : ""
             })
+            return filename
