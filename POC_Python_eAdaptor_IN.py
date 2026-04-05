@@ -41,7 +41,7 @@ class CargoWise_eAdaptor_IN_CargoItineraryData():
         ])
 
 
-        wb.save(filename)
+        return filename
 
 
 class CargoWise_eAdaptor_IN_CargoItemsData():
@@ -78,7 +78,7 @@ class CargoWise_eAdaptor_IN_CargoItemsData():
         ])
 
 
-        wb.save(filename)
+        return filename
 
 class CargoWise_eAdaptor_IN_ContainerData():
     
@@ -131,4 +131,4 @@ class CargoWise_eAdaptor_IN_ContainerData():
         ])
 
 
-        wb.save(filename)
+        return filename
