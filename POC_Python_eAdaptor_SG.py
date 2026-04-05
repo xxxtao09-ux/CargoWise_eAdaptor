@@ -165,3 +165,4 @@ class CargoWise_eAdaptor_SG_BOL():
                 "Seal Number Carrier":""  
 
             })
+            return filename
