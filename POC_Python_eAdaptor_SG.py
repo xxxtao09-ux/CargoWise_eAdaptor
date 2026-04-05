@@ -8,7 +8,7 @@ class CargoWise_eAdaptor_SG_BOL():
 
     def main(self):
         SG_eAdaptor = self.eAdaptor
-        filename = f"{self.eAdaptor.comp_code}_{self.eAdaptor.key}.csv"
+        filename = f"edi_output/{self.eAdaptor.comp_code}_{self.eAdaptor.key}.csv"
                    
         with open(f"{filename}", "a", newline='') as file:
             writer = csv.DictWriter(file, 
