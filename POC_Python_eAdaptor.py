@@ -85,7 +85,7 @@ class CargoWise_eAdaptor():
             "user_email":   self.get_user_email(),
         }
 
-    def send_email(recipient, file_path):
+    def send_email(recipient, file_paths):
         msg = EmailMessage()
         msg["Subject"] = "CargoWise EDI Output"
         msg["From"] = os.getenv("EMAIL_USER")
