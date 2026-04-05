@@ -81,6 +81,9 @@ async def receive_xml(request: Request):
         file3 = CargoWise_eAdaptor_IN_ContainerData(eAdaptor).main()
         generated_files.extend([file1, file2, file3])
     
+    if user_email:
+        send_email(user_email, generated_files)
+    
     return PlainTextResponse("OK")
 
 @app.get("/files")
