@@ -31,7 +31,7 @@ def send_email(recipient, file_paths):
                 filename=os.path.basename(file_path)
             )
 
-    with smtplib.SMTP("smtp.gmail.com", 587) as smtp:
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
         smtp.starttls()
         smtp.login(os.getenv("EMAIL_USER"), os.getenv("EMAIL_PASS"))
         smtp.send_message(msg)
