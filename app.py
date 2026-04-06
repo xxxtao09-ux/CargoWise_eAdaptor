@@ -5,6 +5,10 @@ from POC_Python_eAdaptor_PH_CTN import CargoWise_eAdaptor_PH_CTN
 from POC_Python_eAdaptor_IN import CargoWise_eAdaptor_IN_CargoItineraryData
 from POC_Python_eAdaptor_IN import CargoWise_eAdaptor_IN_CargoItemsData
 from POC_Python_eAdaptor_IN import CargoWise_eAdaptor_IN_ContainerData
+from email.message import EmailMessage
+from google.oauth2.credentials import Credentials
+from googleapiclient.discovery import build
+import base64
 from fastapi import FastAPI, Request
 import xml.etree.ElementTree as ET
 from fastapi.responses import PlainTextResponse
@@ -15,28 +19,40 @@ from openpyxl import Workbook
 import smtplib
 from email.message import EmailMessage
 
-def send_email(recipient, file_paths):
-    msg = EmailMessage()
-    msg["Subject"] = "CargoWise EDI Output"
-    msg["From"] = os.getenv("EMAIL_USER")
-    msg["To"] = recipient
-    msg.set_content("Please find attached EDI output files.")
+def send_email_gmail(recipient, file_paths):
+    creds = Credentials.from_authorized_user_file("token.json")
+    service = build('gmail', 'v1', credentials=creds)
+
+    message = EmailMessage()
+    message.set_content("Please find attached EDI output files.")
+    message["To"] = recipient
+    message["From"] = "yourgmail@gmail.com"
+    message["Subject"] = "CargoWise EDI Output"
 
     for file_path in file_paths:
         with open(file_path, "rb") as f:
-            msg.add_attachment(
-                f.read(),
-                maintype="application",
-                subtype="octet-stream",
-                filename=os.path.basename(file_path)
-            )
+            file_data = f.read()
+            file_name = os.path.basename(file_path)
 
-    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
-        smtp.starttls()
-        smtp.login(os.getenv("EMAIL_USER"), os.getenv("EMAIL_PASS"))
-        smtp.send_message(msg)
+        message.add_attachment(
+            file_data,
+            maintype="application",
+            subtype="octet-stream",
+            filename=file_name
+        )
 
-    print("Email sent:", recipient)
+    encoded_message = base64.urlsafe_b64encode(message.as_bytes()).decode()
+
+    send_message = {
+        'raw': encoded_message
+    }
+
+    service.users().messages().send(
+        userId="me",
+        body=send_message
+    ).execute()
+
+    print("Email sent via Gmail API")
 
 app = FastAPI()
 
