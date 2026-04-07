@@ -18,6 +18,7 @@ import pandas as pd
 from openpyxl import Workbook
 import smtplib
 from email.message import EmailMessage
+import json
 
 def send_email_gmail(recipient, file_paths):
     creds = Credentials.from_authorized_user_info(
