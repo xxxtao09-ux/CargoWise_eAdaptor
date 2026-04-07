@@ -20,7 +20,9 @@ import smtplib
 from email.message import EmailMessage
 
 def send_email_gmail(recipient, file_paths):
-    creds = Credentials.from_authorized_user_file("token.json")
+    creds = Credentials.from_authorized_user_info(
+        json.loads(os.getenv("GMAIL_TOKEN_JSON"))
+    )
     service = build('gmail', 'v1', credentials=creds)
 
     message = EmailMessage()
